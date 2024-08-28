@@ -2,15 +2,14 @@ package mysql
 
 import (
 	// "fmt"
+	"fmt"
 	"sipgrep/pkg/env"
 	"sipgrep/pkg/log"
 	"sipgrep/pkg/models"
 	"sipgrep/pkg/prom"
-	"sipgrep/pkg/util"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
-	// "gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -98,7 +97,7 @@ func Save(s *models.SIP) {
 		CSeqNumber:     s.CSeqNumber,
 		FromUser:       s.FromUsername,
 		FromHost:       s.FromDomain,
-		ToUser:         util.ReverseString(s.ToUsername), // 被叫号码翻转后存储, 方便查询时不需要加前缀
+		ToUser:         s.ToUsername,
 		ToHost:         s.ToDomain,
 		SIPCallID:      s.CallID,
 		SIPProtocol:    uint(s.Protocol),
@@ -117,10 +116,15 @@ func Save(s *models.SIP) {
 
 func Connect() {
 	var err error
-	// dsn := fmt.Sprintf("%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&sql_mode=TRADITIONAL", UserPasswd, Addr, DBName)
-	dsn := "host=localhost user=wangduanduan dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 
-	
+	dsn := fmt.Sprintf(
+		"host=%s user=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
+		env.Conf.DBAddr,
+		env.Conf.DBUser,
+		env.Conf.DBName,
+		env.Conf.DBPort,
+	)
+
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
@@ -132,6 +136,10 @@ func Connect() {
 
 	sqlDB, err := db.DB()
 
+	if err != nil {
+		log.Fatalf("connect db error: %v", err)
+	}
+
 	// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
 	sqlDB.SetMaxIdleConns(env.Conf.SqlMaxIdleConn)
 
@@ -142,59 +150,4 @@ func Connect() {
 	sqlDB.SetConnMaxLifetime(time.Minute)
 
 	db.AutoMigrate(&Record{})
-}
-
-func FindBySIPCallID(Date, SIPCallID string) ([]Record, error) {
-	var re []Record
-
-	tableName := GetTableName(Date)
-
-	sqlRE := db.Table(tableName).Where("sip_call_id = ?", SIPCallID).Order("create_time, timestamp_micro").Find(&re)
-
-	if sqlRE.Error != nil {
-		return nil, sqlRE.Error
-	}
-
-	return re, nil
-}
-
-func Search(sql string) ([]CallTable, error) {
-	rows, err := db.Raw(sql).Rows()
-
-	if err != nil {
-		return nil, err
-	}
-
-	table := make([]CallTable, 0, env.Conf.PageLimit)
-
-	defer rows.Close()
-
-	for rows.Next() {
-		item := CallTable{}
-
-		err := rows.Scan(
-			&item.ID,
-			&item.SIPCallID,
-			&item.CreateTime,
-			&item.FromUser,
-			&item.FromHost,
-			&item.ToUser,
-			&item.ToHost,
-			&item.UserAgent,
-			&item.SIPProtocol,
-			&item.SIPMethod,
-			&item.CSeqMethod,
-			&item.FsCallID,
-			&item.LegUid,
-			&item.MsgCount,
-		)
-
-		if err != nil {
-			log.Errorf("sql scan error: %v", err)
-		}
-
-		table = append(table, item)
-	}
-
-	return table, nil
 }

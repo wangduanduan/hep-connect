@@ -25,7 +25,7 @@ func CreateHepServer() {
 	if err != nil {
 		log.Fatalf("Udp Service listen report udp fail:%v", err)
 	}
-	log.Infof("create udp success")
+	log.Infof("create udp success, listen udp port %v", env.Conf.UDPListenPort)
 
 	defer conn.Close()
 	var data = make([]byte, env.Conf.MaxPacketLength)

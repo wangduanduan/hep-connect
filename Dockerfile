@@ -20,7 +20,6 @@ COPY --from=builder /app/run .
 ENV TZ=Asia/Shanghai
 
 EXPOSE 9060/udp
-EXPOSE 3000
 
 ENTRYPOINT ["/app/run"]
 

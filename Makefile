@@ -9,21 +9,12 @@ dev:
 	watchexec -r -e go -- go run main.go
 go:
 	go build -o run .
-gofmt:
-	gofmt -l -w .
 image-build:
 	docker build . -t $(image_name)
 image-push:
 	docker push $(image_name)
-release:
-	git tag v$(version)
-	git push origin v$(version)
 test:
 	go test -v ./...
-fmt:
-	go fmt ./...
-changelog:
-	git-chglog -o CHANGELOG.md
 run:
 	-docker rm -f sipgrep-go;
 	docker run -d \
@@ -34,11 +25,9 @@ run:
 	-e DBUserPasswd="$(DBUserPasswd)" \
 	--name sipgrep-go \
 	harbor:5000/wecloud/sipgrep-go:$(image_name)
-t1:
-	http --verbose localhost:3000/api/v1/call BeginTime=="2023-11-05 00:00:00" EndTime=="2023-11-05 23:59:59"
-t2:
-	http --verbose localhost:3000/api/v1/call/2023-11-11/oMDfqeY4EHHwovasP2Mn9x3aFzOy6Lvw
-t3:
-	http --verbose localhost:3000/api/v1/2023-11-12/ccgLi7C.C6PxAqJWT-RrUyWk6MI0BZJq
-t4:
-	http --verbose localhost:3000/api/v1/call/2023-11-12/25ya3ru5Kx2TJDBrXYMreSlBcsuCLFxL/
+capture-hep:
+	sngrep -c -H udp:127.0.0.1:9060
+start-uas:
+	sipp -sn uas
+start-uac:
+	sipp -sn uac 127.0.0.1
