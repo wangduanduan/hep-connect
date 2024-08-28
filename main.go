@@ -2,12 +2,12 @@ package main
 
 import (
 	"sipgrep/pkg/hepserver"
-	"sipgrep/pkg/mysql"
+	"sipgrep/pkg/pg"
 )
 
 func main() {
-	mysql.Connect()
+	pg.Connect()
 
-	go mysql.BatchSaveInit()
+	go pg.BatchSaveInit()
 	hepserver.CreateHepServer()
 }

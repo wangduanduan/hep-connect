@@ -6,7 +6,7 @@ import (
 	"sipgrep/pkg/env"
 	"sipgrep/pkg/log"
 	"sipgrep/pkg/msg"
-	"sipgrep/pkg/mysql"
+	"sipgrep/pkg/pg"
 	"sipgrep/pkg/prom"
 	"time"
 
@@ -57,6 +57,6 @@ func CreateHepServer() {
 
 		prom.MsgCount.With(prometheus.Labels{"type": "on_message"}).Inc()
 
-		go msg.OnMessage(raw, mysql.Save, remoteAddr.IP)
+		go msg.OnMessage(raw, pg.Save, remoteAddr.IP)
 	}
 }
