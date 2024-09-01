@@ -20,26 +20,26 @@ const MaxUserAgentLength = 40
 
 type Record struct {
 	ID         int64     `gorm:"column:id;type:int;autoIncrement;primaryKey"`
-	SIPCallID  string    `gorm:"column:sip_call_id;index;type:char(64);not null;default:''"`
-	SIPMethod  string    `gorm:"column:sip_method;index;type:char(20);not null;default:''"`
+	SIPCallID  string    `gorm:"column:sip_call_id;index;type:varchar(64);not null;default:''"`
+	SIPMethod  string    `gorm:"column:sip_method;index;type:varchar(20);not null;default:''"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;primaryKey"`
-	ToUser     string    `gorm:"column:to_user;index;type:char(40);not null;default:''"`
-	LegUid     string    `gorm:"column:leg_uid;index;type:char(64);not null;default:''"`
-	FromUser   string    `gorm:"column:from_user;index;type:char(40);not null;default:''"`
+	ToUser     string    `gorm:"column:to_user;index;type:varchar(40);not null;default:''"`
+	LegUid     string    `gorm:"column:leg_uid;index;type:varchar(64);not null;default:''"`
+	FromUser   string    `gorm:"column:from_user;index;type:varchar(40);not null;default:''"`
 
-	FsCallID string `gorm:"column:fs_call_id;type:char(64);not null; default:''"`
+	FsCallID string `gorm:"column:fs_call_id;type:varchar(64);not null; default:''"`
 
 	ResponseCode int    `gorm:"column:response_code;type:int;not null;default:0"`
-	ResponseDesc string `gorm:"column:response_desc;type:char(64);not null;default:''"`
-	CSeqMethod   string `gorm:"column:cseq_method;type:char(20);not null;default:''"`
+	ResponseDesc string `gorm:"column:response_desc;type:varchar(64);not null;default:''"`
+	CSeqMethod   string `gorm:"column:cseq_method;type:varchar(20);not null;default:''"`
 	CSeqNumber   int    `gorm:"column:cseq_number;type:int;not null;default:0"`
 
-	FromHost       string `gorm:"column:from_host;type:char(64);not null;default:''"`
-	ToHost         string `gorm:"column:to_host;type:char(64);not null;default:''"`
+	FromHost       string `gorm:"column:from_host;type:varchar(64);not null;default:''"`
+	ToHost         string `gorm:"column:to_host;type:varchar(64);not null;default:''"`
 	SIPProtocol    uint   `gorm:"column:sip_protocol;type:int;not null;default:0"`
-	UserAgent      string `gorm:"column:user_agent;type:char(40);not null;default:''"`
-	SrcHost        string `gorm:"column:src_host;type:char(32);not null;default:''"`
-	DstHost        string `gorm:"column:dst_host;type:char(32);not null;default:''"`
+	UserAgent      string `gorm:"column:user_agent;type:varchar(40);not null;default:''"`
+	SrcHost        string `gorm:"column:src_host;type:varchar(32);not null;default:''"`
+	DstHost        string `gorm:"column:dst_host;type:varchar(32);not null;default:''"`
 	TimestampMicro uint32 `gorm:"column:timestamp_micro;type:int;not null;default:0"`
 	RawMsg         string `gorm:"column:raw_msg;type:text;not null"`
 }
