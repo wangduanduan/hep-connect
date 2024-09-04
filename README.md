@@ -155,14 +155,14 @@ nginx版本需要高于1.9.13, 下面是配置文件
 
 ```conf
 stream {
-    upstream dns_upstreams {
+    upstream hep_connect {
         server 192.168.1.100:9060;
         server 192.168.1.101:9060;
     }
 
     server {
-        listen 53 udp;
-        proxy_pass dns_upstreams;
+        listen 9060 udp;
+        proxy_pass hep_connect;
         proxy_timeout 1s;
         proxy_responses 0;
         error_log logs/dns.log;
