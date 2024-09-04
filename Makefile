@@ -16,15 +16,14 @@ image-push:
 test:
 	go test -v ./...
 run:
-	-docker rm -f sipgrep-go;
 	docker run -d \
 	-p 3000:3000 \
 	-p 9060:9060/udp \
 	-e DBAddr="$(DBAddr)" \
 	-e DBName="$(DBName)" \
 	-e DBUserPasswd="$(DBUserPasswd)" \
-	--name sipgrep-go \
-	harbor:5000/wecloud/sipgrep-go:$(image_name)
+	--name hep-connect \
+	eddiemurphy5/hep-connect:latest
 capture-hep:
 	sngrep -c -H udp:127.0.0.1:9060
 start-uas:
