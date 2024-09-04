@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o run .
+RUN go build -o run .
 
 FROM alpine:3.14.2
 
