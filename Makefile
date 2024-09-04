@@ -1,5 +1,5 @@
 version=$(shell cat VERSION)
-image_name="wangduanduan/sipgrep-go:$(version)"
+image_name=eddiemurphy5/hep-connect:latest
 
 DBAddr=
 DBName=

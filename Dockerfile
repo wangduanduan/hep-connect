@@ -1,6 +1,6 @@
-FROM golang:1.17.2 as builder
+FROM golang:1.17.2 AS builder
 
-ENV GO111MODULE=on GOPROXY=https://goproxy.cn,direct
+# ENV GO111MODULE=on GOPROXY=https://goproxy.cn,direct
 
 WORKDIR /app
 
