@@ -20,9 +20,9 @@ const MaxUserAgentLength = 40
 
 type Record struct {
 	ID         int64     `gorm:"column:id;type:int;autoIncrement;primaryKey"`
-	SIPCallID  string    `gorm:"column:sip_call_id;index;type:varchar(64);not null;default:''"`
+	SIPCallID  string    `gorm:"column:sip_call_id;type:varchar(64);not null;default:'';index"`
 	SIPMethod  string    `gorm:"column:sip_method;index;type:varchar(20);not null;default:''"`
-	CreateTime time.Time `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP;primaryKey"`
+	CreateTime time.Time `gorm:"column:create_time;index;type:timestamp;not null;default:CURRENT_TIMESTAMP"`
 	ToUser     string    `gorm:"column:to_user;index;type:varchar(40);not null;default:''"`
 	LegUid     string    `gorm:"column:leg_uid;index;type:varchar(64);not null;default:''"`
 	FromUser   string    `gorm:"column:from_user;index;type:varchar(40);not null;default:''"`
@@ -42,11 +42,6 @@ type Record struct {
 	DstHost        string `gorm:"column:dst_host;type:varchar(32);not null;default:''"`
 	TimestampMicro uint32 `gorm:"column:timestamp_micro;type:int;not null;default:0"`
 	RawMsg         string `gorm:"column:raw_msg;type:text;not null"`
-}
-
-type CallTable struct {
-	Record
-	MsgCount int
 }
 
 var maxBatchItems = env.Conf.MaxBatchItems
@@ -150,4 +145,5 @@ func Connect() {
 	sqlDB.SetConnMaxLifetime(time.Minute)
 
 	db.AutoMigrate(&Record{})
+	// db.Debug().AutoMigrate(&Record1{})
 }
