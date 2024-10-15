@@ -25,7 +25,7 @@ run:
 	--name hep-connect \
 	eddiemurphy5/hep-connect:latest
 capture-hep:
-	sngrep -c -H udp:127.0.0.1:9060
+	sngrep -c -N -H udp:127.0.0.1:9060
 start-uas:
 	sipp -sn uas
 start-uac:
