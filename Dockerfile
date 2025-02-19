@@ -4,9 +4,10 @@ FROM golang:1.22.5 AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY pkg /app/pkg
+COPY go.mod go.sum main.go /app/
 
-RUN go build -o run .
+RUN CGO_ENABLED=0 go build -o run .
 
 FROM alpine:3.14.2
 
