@@ -2,6 +2,8 @@
 
 hep-connect接受HEP格式的UDP消息, 然后写入PostgreSQL数据
 
+- 只支持HEP3格式
+
 ## 架构图
 
 ```
@@ -30,6 +32,8 @@ docker run -d
 --name hep-connect \
 eddiemurphy5/hep-connect:latest
 ```
+
+其他版本，可以访问 https://hub.docker.com/r/eddiemurphy5/hep-connect/tags
 
 **环境变量说明**
 
