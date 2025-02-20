@@ -113,9 +113,10 @@ func Connect() {
 	var err error
 
 	dsn := fmt.Sprintf(
-		"host=%s user=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
 		env.Conf.DBAddr,
 		env.Conf.DBUser,
+		env.Conf.DBPasswd,
 		env.Conf.DBName,
 		env.Conf.DBPort,
 	)
