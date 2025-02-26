@@ -89,6 +89,33 @@ route {
 }
 ```
 
+## Kamailio 5.6集成
+
+```
+# 新增一个本地监听端口
+listen=udp:192.168.0.100:8913
+
+
+# 加载siptrace
+loadmodule "siptrace.so"
+
+# hep-connect地址
+modparam("siptrace", "duplicate_uri", "sip:192.168.0.101:9060")
+
+# Kamailio本地监听端口， 对应了listen=udp:192.168.0.100:8913
+modparam("siptrace", "send_sock_addr", "sip:192.168.0.100:8913")
+
+modparam("siptrace", "hep_mode_on", 1)
+modparam("siptrace", "hep_version", 3)
+modparam("siptrace", "trace_to_database", 0)
+modparam("siptrace", "trace_on", 1)
+
+route{
+  # 在需要做信令抓包的地方，执行这个函数
+  sip_trace_mode("t");
+}
+```
+
 ## FreeSWITCH
 
 fs version 1.6.8+ 
