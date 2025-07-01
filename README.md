@@ -33,7 +33,7 @@ docker run -d
 ghcr.io/wangduanduan/hep-connect:latest
 ```
 
-其他版本，可以访问 https://github.com/wangduanduan/hep-connect/packages
+其他版本，可以访问 https://github.com/wangduanduan/hep-connect/pkgs/container/hep-connect
 
 **环境变量说明**
 

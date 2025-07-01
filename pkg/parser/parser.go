@@ -144,6 +144,15 @@ func ParseSIPURL(s string) (string, string) {
 		c = len(newURL)
 	}
 
+	// 保证切片不会越界， fix #5
+	if a+1 >= b {
+		return "", ""
+	}
+
+	if b+1 >= c {
+		return "", ""
+	}
+
 	user := newURL[a+1 : b]
 	domain := newURL[b+1 : c]
 	return user, domain
