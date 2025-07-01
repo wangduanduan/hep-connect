@@ -30,10 +30,10 @@ docker run -d
 -e DBPasswd="pass" \
 -e MaxBatchItems="100" \
 --name hep-connect \
-eddiemurphy5/hep-connect:latest
+ghcr.io/wangduanduan/hep-connect:latest
 ```
 
-其他版本，可以访问 https://hub.docker.com/r/eddiemurphy5/hep-connect/tags
+其他版本，可以访问 https://github.com/wangduanduan/hep-connect/packages
 
 **环境变量说明**
 
