@@ -83,7 +83,7 @@ route {
     if (has_totag()) {
         route(r_seq_request);
     } else {
-		trace("tid", "d", "sip");
+		  trace("tid", "d", "sip");
     }
     ...
 }
@@ -100,7 +100,7 @@ listen=udp:192.168.0.100:8913
 loadmodule "siptrace.so"
 
 # hep-connect地址
-modparam("siptrace", "duplicate_uri", "sip:192.168.0.101:9060")
+modparam("siptrace", "duplicate_uri", "sip:1.2.3.4:9060")
 
 # Kamailio本地监听端口， 对应了listen=udp:192.168.0.100:8913
 modparam("siptrace", "send_sock_addr", "sip:192.168.0.100:8913")
